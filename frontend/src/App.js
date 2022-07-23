@@ -1,7 +1,18 @@
 import "./App.css";
-
+import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import { BrowserRouter as Router } from "react-router-dom";
 function App() {
-  return <h1 className='text-3xl font-bold underline'>Hello world!</h1>;
+  return (
+    <Router>
+      <Routes>
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/' />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
