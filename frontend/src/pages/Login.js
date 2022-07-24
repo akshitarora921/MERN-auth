@@ -1,7 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import axios from "axios";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useToken } from "../hooks/useToken";
 function Login() {
+  const [, setToken] = useToken();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const result = await axios.post("http://localhost:3030/api/login", {
+      email,
+      password,
+    });
+    const { token } = result.data;
+
+    setToken(token);
+    navigate("/");
+  };
   return (
     <div className='min-h-screen bg-blue-400 flex justify-center items-center '>
       <div className='absolute w-60 h-60 rounded-xl bg-blue-300 -top-5 -left-16 z-0 transform rotate-45 hidden md:block'></div>
@@ -18,17 +34,24 @@ function Login() {
         <div className='space-y-4'>
           <input
             type='text'
-            placeholder='Email Addres'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder='Email Address'
             className='block text-sm py-3 px-4 rounded-lg w-full border outline-none'
           />
           <input
-            type='text'
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder='Password'
             className='block text-sm py-3 px-4 rounded-lg w-full border outline-none'
           />
         </div>
         <div className='text-center mt-6'>
-          <button className='py-3 w-64 text-xl text-white bg-blue-400 rounded-2xl'>
+          <button
+            onClick={handleLogin}
+            className='py-3 w-64 text-xl text-white bg-blue-400 rounded-2xl'
+          >
             Login
           </button>
           <p className='mt-4 text-sm'>

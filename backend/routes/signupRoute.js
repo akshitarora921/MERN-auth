@@ -13,8 +13,8 @@ export const signupRoute = {
     if (user) {
       res.status(409);
     }
-
     const passwordHash = await bcrypt.hash(password, 10);
+    console.log(password, passwordHash);
     const privateInfo = {
       favoriteFood: "",
       favoriteSports: "",

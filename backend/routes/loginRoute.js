@@ -13,8 +13,9 @@ export const loginRoute = {
     if (!user) return res.status(401);
 
     const { _id: id, isVerified, passwordHash, privateInfo } = user;
+    console.log(password, passwordHash);
     const isCorrect = await bcrypt.compare(password, passwordHash);
-
+    console.log(isCorrect);
     if (!isCorrect) {
       res.status(401).send("incorrect password");
     }
